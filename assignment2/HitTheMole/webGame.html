@@ -4,67 +4,79 @@
     <meta charset="utf-8" />
     <title>Whac-a-mole</title>
     <style>
-        p {
-            font-size:120%;
-            font-weight: bold;
-            margin-top:20px;
-            margin-bottom:5px;
+        .none
+        {
+            border-collapse:collapse;
+            text-align:center;
         }
+        .basic
+        {
+            border-collapse:collapse;
+            text-align:center;
+            background-color:cornflowerblue;
+        }
+
     </style>
 
 </head>
 <body>
     <h1 style="text-align:center">Whac-a-mole game</h1>
+    <div style="text-align:center">
+        select level:
+        <select id="selectForLevel">
+            <option value="0">easy</option>
+            <option value="1">medium</option>
+            <option value="2">hard</option>
+        </select>
+        <span style="padding-left:8px">
+            select a theme:
+        </span>
+        <select id="selectForTheme">
+            <option>none</option>
+            <option>basic</option>
+            <option>advanced</option>
+        </select>
 
+        <input type="button" value="start game" onclick="startGame()" />
+
+    </div>
     <script>
-        //function that display the manu, and let the user choose level and the theme
-        function startMenu() {
+        var EASY_SIZE = 3;
+        var MEDIUM_SIZE = 5;
+        var HARD_SIZE = 10;
+
+
+        function startGame() {
+            var selc2 = document.getElementById("selectForTheme");
+            var theme = selc2.options[selc2.selectedIndex].text;
+            createBoardGame();
+        }
+
+        function createBoardGame() {
             var div = document.createElement("div");
-            var selectForLevel = document.createElement("select");
-            var selectForTheme = document.createElement("select");
-            var arrLevel = ["easy", "medium", "hard"];
-            var arrTheme = ["none", "basic", "advanced"];
+            var selc1 = document.getElementById("selectForLevel");
+            var lvl = selc1.options[selc1.selectedIndex].value;
 
-            var header = document.createElement("h1");
-            header.innerHTML = "Whac-a-mole game";
+            var sizeTbl = [EASY_SIZE, MEDIUM_SIZE, HARD_SIZE]; //[3,5,10]
+            var tbl = document.createElement("table");
+            var selectedSize = sizeTbl[lvl];
 
-
-            var br1 = document.createElement("br");
-            var br2 = document.createElement("br");
-            var br3 = document.createElement("br");
-
-
-            var p1 = document.createElement("p");
-            p1.innerHTML = "select level:"
-            for (i = 0; i < arrLevel.length; i++) {
-                var option = document.createElement("option");
-                option.innerHTML = arrLevel[i];
-                option.value = arrLevel[i];
-                selectForLevel.append(option);
+            for (var i = 0; i < selectedSize; i++) {
+                var tr = document.createElement("tr");
+                tr.style.height = "50px";
+                for (j = 0; j < selectedSize; j++) {
+                    var th = document.createElement("th");
+                    th.style.width = "60px";
+                    tr.append(th);
+                }
+                tbl.append(tr);
             }
-
-            var p2 = document.createElement("p");
-            p2.innerHTML = "select a theme:"
-            for (j = 0; j < arrTheme.length; j++) {
-                var option2 = document.createElement("option");
-                option2.innerHTML = arrTheme[j];
-                option2.value = arrTheme[j];
-                selectForTheme.append(option2);
-            }
-            var inputBttn = document.createElement("input");
-            inputBttn.type = "button";
-            inputBttn.value = "start game";
-
-
-            div.style.textAlign = "center";
-            div.append(p1, selectForLevel, p2, selectForTheme, br1, br2, br3, inputBttn);
+            tbl.border = "5";
+            tbl.style.borderCollapse = "collapse";
+            tbl.align = "center";
+            div.append(tbl);
             document.body.append(div);
         }
-
-        function createGame() {
-
-        }
-        startMenu();
     </script>
 </body>
 </html>
