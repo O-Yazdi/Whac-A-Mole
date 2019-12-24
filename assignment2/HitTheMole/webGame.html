@@ -4,16 +4,10 @@
     <meta charset="utf-8" />
     <title>Whac-a-mole</title>
     <style>
-        .none
+        .setTheme
         {
-            border-collapse:collapse;
             text-align:center;
-        }
-        .basic
-        {
-            border-collapse:collapse;
-            text-align:center;
-            background-color:cornflowerblue;
+            background-color:lightsteelblue;
         }
 
     </style>
@@ -38,7 +32,9 @@
         </select>
 
         <input type="button" value="start game" onclick="startGame()" />
+        <div id="myDiv">
 
+        </div>
     </div>
     <script>
         var EASY_SIZE = 3;
@@ -46,37 +42,59 @@
         var HARD_SIZE = 10;
 
 
+        //function that start a new game, calls function that create the table and set the theme. 
         function startGame() {
-            var selc2 = document.getElementById("selectForTheme");
-            var theme = selc2.options[selc2.selectedIndex].text;
+            var divToDlt = document.getElementById("myDiv");
+            divToDlt.parentElement.removeChild(divToDlt); //remove the current table.
+
             createBoardGame();
         }
 
         function createBoardGame() {
             var div = document.createElement("div");
+            div.id = "myDiv"
             var selc1 = document.getElementById("selectForLevel");
             var lvl = selc1.options[selc1.selectedIndex].value;
-
+            var selc2 = document.getElementById("selectForTheme");
+            var theme = selc2.options[selc2.selectedIndex].value;
             var sizeTbl = [EASY_SIZE, MEDIUM_SIZE, HARD_SIZE]; //[3,5,10]
             var tbl = document.createElement("table");
-            var selectedSize = sizeTbl[lvl];
+            var selectedSize = sizeTbl[lvl]; // selectedSize = 3 or 5 or 10 depending on the difficulty selected
 
             for (var i = 0; i < selectedSize; i++) {
                 var tr = document.createElement("tr");
-                tr.style.height = "50px";
+                tr.style.height = "42px";
                 for (j = 0; j < selectedSize; j++) {
                     var th = document.createElement("th");
-                    th.style.width = "60px";
-                    tr.append(th);
+                    th.style.width = "42px";
+                    if (theme != "none") {
+                        if (theme == "basic") {
+                            th.className = "setTheme";
+                        }
+                        else { //theme == advanced
+                            if (i % 2 == 0) {
+                                if (j % 2 == 0) {
+                                    th.className = "setTheme";
+                                }
+                            }
+                            else {
+                                if (j % 2 != 0) {
+                                    th.className = "setTheme";
+                                }
+                            }
+                        }
+                    } // if statement to set the theme
+                        tr.append(th);
+                    }
+                    tbl.append(tr);
                 }
-                tbl.append(tr);
+
+                tbl.border = "1";
+                tbl.cellSpacing = "6px";
+                tbl.align = "center";
+                div.append(tbl);
+                document.body.append(div);
             }
-            tbl.border = "5";
-            tbl.style.borderCollapse = "collapse";
-            tbl.align = "center";
-            div.append(tbl);
-            document.body.append(div);
-        }
     </script>
 </body>
 </html>
