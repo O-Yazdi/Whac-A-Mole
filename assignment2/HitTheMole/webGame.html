@@ -44,9 +44,11 @@
         img1 = document.createElement("img"); //mole
         img2 = document.createElement("img"); //mole after hit :)
         img1.width = "40";
-        img1.src = "mole1.jpg";
+        img1.height = "30";
+        img1.src = "img/mole1.png";
         img2.width = "40";
-        img2.src = "mole2.png";
+        img2.height = "30";
+        img2.src = "img/mole2.png";
 
 
         //function that start a new game, calls function that create the table and set the theme. 
@@ -74,6 +76,7 @@
                 for (j = 0; j < selectedSize; j++) {
                     var th = document.createElement("th");
                     th.style.width = "42px";
+                    th.style.padding = "0";
                     if (theme != "none") {
                         if (theme == "basic") {
                             th.className = "setTheme";
@@ -109,6 +112,10 @@
             var randNum2 = Math.floor((10 * Math.random()) % selectedSize); //rand int num between 0 to the selectedSize num.
             var cellWithMole = tbl.rows[randNum1].cells[randNum2];
             cellWithMole.appendChild(img1);
+            img1.onclick = function () {
+                cellWithMole.removeChild(img1);
+                cellWithMole.append(img2);
+            }
         }
     </script>
 </body>
