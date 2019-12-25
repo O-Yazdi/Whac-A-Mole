@@ -37,9 +37,16 @@
         </div>
     </div>
     <script>
-        var EASY_SIZE = 3;
-        var MEDIUM_SIZE = 5;
-        var HARD_SIZE = 10;
+        EASY_SIZE = 3;
+        MEDIUM_SIZE = 5;
+        HARD_SIZE = 10;
+        sizeTbl = [EASY_SIZE, MEDIUM_SIZE, HARD_SIZE]; //[3,5,10]
+        img1 = document.createElement("img"); //mole
+        img2 = document.createElement("img"); //mole after hit :)
+        img1.width = "40";
+        img1.src = "mole1.jpg";
+        img2.width = "40";
+        img2.src = "mole2.png";
 
 
         //function that start a new game, calls function that create the table and set the theme. 
@@ -57,9 +64,9 @@
             var lvl = selc1.options[selc1.selectedIndex].value;
             var selc2 = document.getElementById("selectForTheme");
             var theme = selc2.options[selc2.selectedIndex].value;
-            var sizeTbl = [EASY_SIZE, MEDIUM_SIZE, HARD_SIZE]; //[3,5,10]
-            var tbl = document.createElement("table");
-            var selectedSize = sizeTbl[lvl]; // selectedSize = 3 or 5 or 10 depending on the difficulty selected
+            tbl = document.createElement("table");
+            tbl.id = "myTable";
+            selectedSize = sizeTbl[lvl]; // selectedSize = 3 or 5 or 10 depending on the difficulty selected
 
             for (var i = 0; i < selectedSize; i++) {
                 var tr = document.createElement("tr");
@@ -93,8 +100,16 @@
                 tbl.cellSpacing = "6px";
                 tbl.align = "center";
                 div.append(tbl);
-                document.body.append(div);
-            }
+            document.body.append(div);
+            runGame();
+        }
+
+        function runGame() {
+            var randNum1 = Math.floor((10 * Math.random()) % selectedSize); //rand int num between 0 to the selectedSize num.
+            var randNum2 = Math.floor((10 * Math.random()) % selectedSize); //rand int num between 0 to the selectedSize num.
+            var cellWithMole = tbl.rows[randNum1].cells[randNum2];
+            cellWithMole.appendChild(img1);
+        }
     </script>
 </body>
 </html>
