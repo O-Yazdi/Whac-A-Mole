@@ -115,8 +115,11 @@
             img1.onclick = function () {
                 cellWithMole.removeChild(img1);
                 cellWithMole.append(img2);
+                setTimeout(function () { cellWithMole.removeChild(img2); }, 300);
             }
+            setTimeout(runGame, 1000);
         }
+        
     </script>
 </body>
 </html>
