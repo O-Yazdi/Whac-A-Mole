@@ -57,8 +57,8 @@
             divToDlt.parentElement.removeChild(divToDlt); //remove the current table.
             score.innerHTML = "0";
             miss.innerHTML = "0";
-            funUpdateMiss = setTimeout(updateMiss, 5000); //sophisticated way to clear the fuc that update the miss, in case that we prsess the start game in middle of another game.
-            clearTimeout(funUpdateMiss);
+            //funUpdateMiss = setTimeout(updateMiss, 5000); //sophisticated way to clear the fuc that update the miss, in case that we prsess the start game in middle of another game.
+            //clearTimeout(funUpdateMiss);
             
             createBoardGame();
         }
@@ -128,14 +128,15 @@
             }
             var timeToDisappear = (Math.random() / 2) + 1; //rand number between 1 to 1.5.
             setTimeout(removeMole , 1000 * timeToDisappear);
-            var timeToShowAgain = Math.random() * 0.75 + 0.25; //rand number between 0.25 to 1.
-            fun = setTimeout(runGame, 1000*(timeToDisappear+timeToShowAgain));
         }
 
         //function that remove the mole, and call another function to check if the user hit the mole
         function removeMole() {
             cellWithMole.removeChild(imgMole);
+            var timeToShowAgain = Math.random() * 0.75 + 0.25; //rand number between 0.25 to 1.
+            fun = setTimeout(runGame, 1000*(timeToShowAgain));
             updateMiss();
+
         }
 
         //function that check if the user didnt hit the molee, update the miss
