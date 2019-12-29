@@ -112,28 +112,35 @@
         }
 
         function runGame() {
-            scoreInStartRound = parseInt(score.innerHTML);
             clearTimeout(fun);
             imgMole.src = "img/mole1.png";
             var randNum1 = Math.floor((10 * Math.random()) % selectedSize); //rand int num between 0 to the selectedSize num.
             var randNum2 = Math.floor((10 * Math.random()) % selectedSize); //rand int num between 0 to the selectedSize num.
-            var cellWithMole = tbl.rows[randNum1].cells[randNum2];
+            cellWithMole = tbl.rows[randNum1].cells[randNum2];
             cellWithMole.appendChild(imgMole);
+            sucsessHit = false; //var to save evrery round if the user sucsess to hit the mole, if he doesnt we update the miss score.
             imgMole.onclick = function () {
-                if (imgMole.src.search("img/mole2.png") == -1) { //if the img is the mole before hit so change the img and update the score
+                if (sucsessHit == false) { //if the img is the mole before hit so change the img and update the score
                     imgMole.src = "img/mole2.png";
                     score.innerHTML = parseInt(score.innerHTML) + 1;
+                    sucsessHit = true;
                 }
             }
             var timeToDisappear = (Math.random() / 2) + 1; //rand number between 1 to 1.5.
-            setTimeout(function () { cellWithMole.removeChild(imgMole); }, 1000 * timeToDisappear);
-            funUpdateMiss = setTimeout(updateMiss, 1000 * timeToDisappear);
+            setTimeout(removeMole , 1000 * timeToDisappear);
             var timeToShowAgain = Math.random() * 0.75 + 0.25; //rand number between 0.25 to 1.
             fun = setTimeout(runGame, 1000*(timeToDisappear+timeToShowAgain));
         }
-        //function that check if the score stay the same all the round, update the miss
+
+        //function that remove the mole, and call another function to check if the user hit the mole
+        function removeMole() {
+            cellWithMole.removeChild(imgMole);
+            updateMiss();
+        }
+
+        //function that check if the user didnt hit the molee, update the miss
         function updateMiss() {
-            if (scoreInStartRound == score.innerHTML) {
+            if (!sucsessHit) {
                 miss.innerHTML = parseInt(miss.innerHTML) + 1;
                 if (parseInt(miss.innerHTML) == 3) //if the miss == 3, finish the game.
                     gameOver();
